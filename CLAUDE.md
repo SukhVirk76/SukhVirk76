@@ -4,35 +4,55 @@ This file provides guidance to Claude Code (claude.ai/code) and other AI assista
 
 ## Repository purpose
 
-This is **`sukhvirk76/sukhvirk76`** — a GitHub **special / "magic" profile repository**. Because the repository name is identical to the account name, GitHub treats its root `README.md` as the owner's **profile README**: whatever is in `README.md` renders directly on the public profile page at https://github.com/sukhvirk76.
+This is **`sukhvirk76/sukhvirk76`** — a GitHub **special / "magic" profile repository**. Because the repository name is identical to the account name, GitHub renders its root `README.md` as the owner's **profile README**: whatever is in `README.md` appears on the public profile page at https://github.com/sukhvirk76.
 
-This is *not* a software project. There is no application, build system, package manager, test suite, or deployable artifact. The "product" is the rendered profile page. Treat content and presentation — not code — as the deliverable.
+This is *not* a software application. There is no build system, package manager, or runtime. The "product" is the rendered profile page. Treat content, presentation, and the supporting automation — not application code — as the deliverable.
 
-## Current state
+## Structure
 
-As of this file's creation, the repository is **empty**: it contains no commits other than the ones introducing this documentation, and there is no `README.md` yet. Creating a `README.md` is the natural next step to make the profile page show something.
+```
+.
+├── README.md                       # The profile page (rendered on github.com/sukhvirk76)
+├── CLAUDE.md                       # This file
+├── .gitignore
+└── .github/
+    └── workflows/
+        └── snake.yml               # Generates the contribution-graph "snake" SVG
+```
 
-> When this changes, update this file. If real source code is ever added, replace the sections below with an accurate description of the actual structure, build, and test commands.
+### `README.md`
+The profile content. Built with GitHub-Flavored Markdown plus a small amount of HTML for layout (centering, badge rows, image sizing). Sections: intro, about, tech badges, GitHub stats widgets, contribution snake, and connect links. Most personal details are intentionally generic placeholders marked with inline notes — they are meant to be customized.
+
+External widgets used (all render as plain `<img>` tags, no code to run):
+- **shields.io** — static tech/skill badges.
+- **github-readme-stats** (`github-readme-stats.vercel.app`) — stats + top-languages cards.
+- **streak-stats** (`streak-stats.demolab.com`) — contribution streak card.
+- **komarev ghpvc** — profile view counter.
+
+### `.github/workflows/snake.yml`
+A GitHub Actions workflow that runs daily (and on pushes to `main`) to generate the animated contribution-graph snake via `Platane/snk`, then publishes the SVG to a dedicated `output` branch using `crazy-max/ghaction-github-pages`. `README.md` references the SVG at the raw URL on the `output` branch. The workflow needs `contents: write` permission (already declared in the file) and the default `GITHUB_TOKEN`.
 
 ## Conventions
 
 ### README / profile content
-- The profile README lives at `/README.md` (repository root). It must be there and named exactly `README.md` for GitHub to render it on the profile.
-- Markdown is GitHub-Flavored Markdown (GFM). HTML is permitted for layout (centering, image sizing, badge rows), but a limited subset — GitHub sanitizes `<script>`, inline event handlers, and most CSS.
-- Prefer accessible content: provide `alt` text for images and meaningful link text.
-- Keep secrets and personal contact details out of the README — it is fully public.
+- The profile README must live at `/README.md` (repository root), named exactly `README.md`, for GitHub to render it on the profile.
+- Use GFM; HTML is allowed but GitHub sanitizes `<script>`, inline event handlers, and most CSS. Stick to the safe subset (alignment, `<img>`, `<a>`, `<sub>`, `<details>`).
+- Provide `alt` text for images and meaningful link text (accessibility).
+- Keep secrets and private contact info out of the README — it is fully public.
+- Username `sukhvirk76` is hard-coded into widget URLs; if the account name ever changes, update every widget URL and the snake raw URL.
 
 ### Commits
-- Use clear, descriptive commit messages in the imperative mood (e.g. "Add profile README", "Update tech stack badges").
-- This is a personal repo; keep history clean and readable.
+- Clear, descriptive messages in the imperative mood (e.g. "Add profile README", "Update tech stack badges").
 
 ### Branching & workflow
-- Default development happens on the branch assigned for the current task. Do **not** push to `main`/`master` (or any other branch) without explicit permission.
+- Develop on the branch assigned for the current task. Do **not** push to `main`/`master` without explicit permission.
 - Push with `git push -u origin <branch-name>`.
 - Do **not** open a pull request unless explicitly asked.
+- Note: the `output` branch is **machine-generated** by `snake.yml` — never hand-edit or commit to it manually.
 
 ## Working notes for AI assistants
 
-- Because there is no code, there are no lint/test/build steps to run or verify. Validate Markdown by rendering/preview reasoning rather than executing tooling.
-- If asked to "build out the profile," typical additions include: an intro/bio, current focus, tech stack badges (e.g. shields.io), social links, and GitHub stats widgets. Confirm the desired tone (professional vs. playful) and which links/handles to include before adding personal data.
-- If the user later turns this into an actual code project, re-run repository analysis and rewrite this CLAUDE.md to document the real architecture, commands, and conventions.
+- There is no code, so there are no lint/test/build commands to run. "Validation" means checking Markdown/HTML renders correctly and that widget URLs reference the right username.
+- The snake animation only appears once the `snake.yml` workflow has run successfully at least once (it creates the `output` branch). Until then its `<img>` will be broken — this is expected on a fresh repo.
+- When asked to personalize, confirm tone (professional vs. playful) and which real links/handles to include before adding personal data; replace the placeholder text and commented-out social links in `README.md`.
+- If this repo is ever turned into a real code project, re-analyze and rewrite this file to document the actual architecture, commands, and conventions.
