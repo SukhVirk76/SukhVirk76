@@ -17,11 +17,14 @@ This is *not* a software application. There is no build system, package manager,
 ├── .gitignore
 └── .github/
     └── workflows/
-        └── snake.yml               # Generates the contribution-graph "snake" SVG
+        ├── snake.yml               # Generates the contribution-graph "snake" SVG
+        └── main.yml                # Empty placeholder workflow (see note below)
 ```
 
+> **Note:** `.github/workflows/main.yml` is currently empty. GitHub Actions treats an empty/invalid workflow file as an error, so it will surface as an invalid workflow in the Actions tab until it is given real content or removed.
+
 ### `README.md`
-The profile content. Built with GitHub-Flavored Markdown plus a small amount of HTML for layout (centering, badge rows, image sizing). Sections: intro, about, tech badges, GitHub stats widgets, contribution snake, and connect links. Most personal details are intentionally generic placeholders marked with inline notes — they are meant to be customized.
+The profile content. Built with GitHub-Flavored Markdown plus a small amount of HTML for layout (centering, badge rows, image sizing). Sections: name/tagline header + profile-view counter, About, Tech badges, GitHub stats widgets (stats, top languages, streak), contribution snake, and a Connect section. Tone is professional and links are GitHub-only; the bio, tech badges, and connect links are the intended customization points.
 
 External widgets used (all render as plain `<img>` tags, no code to run):
 - **shields.io** — static tech/skill badges.
