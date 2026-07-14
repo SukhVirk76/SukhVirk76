@@ -18,10 +18,8 @@ This is *not* a software application. There is no build system, package manager,
 └── .github/
     └── workflows/
         ├── snake.yml               # Generates the contribution-graph "snake" SVG
-        └── main.yml                # Empty placeholder workflow (see note below)
+        └── main.yml                # Lints README.md / CLAUDE.md with markdownlint
 ```
-
-> **Note:** `.github/workflows/main.yml` is currently empty. GitHub Actions treats an empty/invalid workflow file as an error, so it will surface as an invalid workflow in the Actions tab until it is given real content or removed.
 
 ### `README.md`
 The profile content. Built with GitHub-Flavored Markdown plus a small amount of HTML for layout (centering, badge rows, image sizing). Sections: name/tagline header + profile-view counter, About, Tech badges, GitHub stats widgets (stats, top languages, streak), contribution snake, and a Connect section. Tone is professional and links are GitHub-only; the bio, tech badges, and connect links are the intended customization points.
@@ -34,6 +32,9 @@ External widgets used (all render as plain `<img>` tags, no code to run):
 
 ### `.github/workflows/snake.yml`
 A GitHub Actions workflow that runs daily (and on pushes to `main`) to generate the animated contribution-graph snake via `Platane/snk`, then publishes the SVG to a dedicated `output` branch using `crazy-max/ghaction-github-pages`. `README.md` references the SVG at the raw URL on the `output` branch. The workflow needs `contents: write` permission (already declared in the file) and the default `GITHUB_TOKEN`.
+
+### `.github/workflows/main.yml`
+Lints `README.md` and `CLAUDE.md` with `DavidAnson/markdownlint-cli2-action` on every push to `main`, on pull requests, and on manual dispatch. Rules that conflict with profile-README conventions (long badge URLs, inline HTML, HTML-based `<h1>` header) are relaxed in `.markdownlint-cli2.jsonc` at the repo root. Read-only; no `output` branch or extra permissions involved.
 
 ## Conventions
 

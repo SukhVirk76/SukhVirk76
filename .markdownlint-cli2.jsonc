@@ -1,0 +1,11 @@
+{
+  // Config for markdownlint-cli2 (used by .github/workflows/main.yml).
+  // Rules are relaxed where they conflict with GitHub profile-README conventions.
+  "config": {
+    "default": true,
+    "MD013": false, // line-length: profile badges/URLs are intentionally long
+    "MD033": false, // inline HTML: required for centering, badges, and layout
+    "MD041": false  // first-line heading: README opens with an <h1> HTML tag
+  },
+  "globs": ["README.md", "CLAUDE.md"]
+}
